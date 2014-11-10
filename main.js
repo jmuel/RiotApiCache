@@ -1,6 +1,8 @@
 var app = require('express')();
 var request = require('request');
 var _ = require('underscore');
+var pass = require('stream').PassThrough;
+var jsonStream = require('JSONStream');
 
 var key = "44b37d42-2e7e-4006-8f65-34b8ef8ca591";
 
@@ -8,7 +10,9 @@ app.get("/api/lol/*", function(req, res) {
     var url = "https://na.api.pvp.net";
     url += req.path + addQuery(_.extend({api_key: key}, req.query));
     console.log(url);
-    req.pipe(request(url)).pipe(res);
+    var temp = req.pipe(request(url))
+    console.log(temp)
+    temp.pipe(res);
 });
 
 var addQuery = function(params) {
