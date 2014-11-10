@@ -1,0 +1,29 @@
+{
+  "name": "RiotApiCache",
+  "version": "0.1.0",
+  "description": "This is a cache for Riot's League of Legends API",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jmuel/RiotApiCache.git"
+  },
+  "keywords": [
+    "Riot",
+    "LeagueOfLegends",
+    "Cache"
+  ],
+  "author": "James Mueller",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jmuel/RiotApiCache/issues"
+  },
+  "homepage": "https://github.com/jmuel/RiotApiCache",
+  "dependencies": {
+    "express": "^4.10.1",
+    "mocha": "^2.0.1",
+    "mongodb": "^1.4.19"
+  }
+}
