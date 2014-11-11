@@ -7,17 +7,17 @@ var collectionName = 'lol_data';
 
 var key = '44b37d42-2e7e-4006-8f65-34b8ef8ca591';
 var mongoUrl = 'mongodb://127.0.0.1:27017/test';
-var riotBaseUrl = 'https://na.api.pvp.net';
+
 
 var db;
 
 app.get('/api/lol/*', function (req, res) {
-    var url = buildUrl(req);
+    var url = uriUtil.buildUrl(req, key);
     checkCache(url, res);
 });
 
 app.get('/force/api/lol/*', function(req, res) {
-    var url = buildUrl(req, true);
+    var url = uriUtil.buildUrl(req, key, true);
     console.log(url);
     console.log(req.path);
     db.collection(collectionName).remove({url:url}, function(err) {
@@ -25,12 +25,6 @@ app.get('/force/api/lol/*', function(req, res) {
     });
     hitRiotAndStoreItInACache(url, res);
 });
-
-var buildUrl = function(req, force) {
-    var path = req.path;
-    if(force) path = path.slice(6);
-    return riotBaseUrl + path + uriUtil.addQuery(_.extend({api_key: key}, req.query));
-}
 
 var checkCache = function (url, res) {
     db.collection(collectionName).findOne({"url": url}, function(err, item) {
