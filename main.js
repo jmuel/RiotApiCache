@@ -7,29 +7,40 @@ var uriUtil = require('./uri-query-utils.js');
 
 var key = "44b37d42-2e7e-4006-8f65-34b8ef8ca591";
 
-app.get("/api/lol/*", function(req, res) {
+var db;
+
+app.get("/api/lol/*", function (req, res) {
     var url = "https://na.api.pvp.net";
     url += req.path + uriUtil.addQuery(_.extend({api_key: key}, req.query));
-    checkMongo(url);
-    var temp = req.pipe(request(url));
-    temp.pipe(res);
+    checkMongo(url, req, res);
 });
 
 
+var checkMongo = function(url, req, res) {
+    var collection = db.collection('lol_data');
 
-var checkMongo = function(url) {
-    MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
-        if(err) throw err;
+    collection.findOne({"url": url}, function (err, item) {
+        if (err) throw err;
+        if (item) {
+            console.log(item);
+            res.send(item.data);
+        }
+        else {
+            console.log('nothing in the cache');
+            req.pipe(request(url)).pipe(res);
+        }
 
-        var collection = db.collection('lol_data');
-        return collection.findOne({"url":url}, function(err, item) {
-            if(err) throw err;
-            console.log(item)
-
-        });
     });
-
 }
+
+MongoClient.connect('mongodb://127.0.0.1:27017/test', function (err, databaseConnection) {
+    if (err) throw err;
+
+    db = databaseConnection;
+
+
+});
+
 
 app.listen(1337);
 
