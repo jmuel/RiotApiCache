@@ -6,7 +6,7 @@ var uriUtil = require('./uri-query-utils.js');
 var collectionName = 'lol_data';
 
 var key = '44b37d42-2e7e-4006-8f65-34b8ef8ca591';
-var mongoUrl = 'mongodb://127.0.0.1:27017/test';
+var mongoUrl = 'mongodb://riotapi:riotapitest@dogen.mongohq.com:10085/app31717137';
 
 
 var db;
@@ -90,5 +90,5 @@ MongoClient.connect(mongoUrl, function (err, databaseConnection) {
 
 app.listen(1337);
 
-console.log('server running at localhost:1337');
+console.log('server running');
 
