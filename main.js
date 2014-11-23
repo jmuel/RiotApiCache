@@ -12,14 +12,14 @@ var mongoUrl = 'mongodb://riotapi:riotapitest@dogen.mongohq.com:10085/app3171713
 var db;
 
 app.get('/api/lol/*', function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     var url = uriUtil.buildUrl(req, key);
     checkCache(url, res);
 });
 
 app.get('/force/api/lol/*', function(req, res) {
     var url = uriUtil.buildUrl(req, key, true);
-    console.log(url);
-    console.log(req.path);
+    res.setHeader('Access-Control-Allow-Origin', '*');
     db.collection(collectionName).remove({url:url}, function(err) {
         if(err) throw err;
     });
@@ -31,7 +31,6 @@ var checkCache = function (url, res) {
         if (err) throw err;
 
         if (item) {
-            console.log(item);
             res.send(item.data);
         }
         else {
@@ -42,7 +41,6 @@ var checkCache = function (url, res) {
 
 var hitRiotAndStoreItInACache = function (url, res) {
     var requestData;
-    console.log('hitting riot directly');
 
     var body = '';
     requestData = request(url);
