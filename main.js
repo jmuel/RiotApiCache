@@ -79,7 +79,7 @@ MongoClient.connect(mongoUrl, function (err, databaseConnection) {
 
     db = databaseConnection;
 
-    db.collection(collectionName).ensureIndex({createdAt: 1}, {expireAfterSeconds: 60}, function(err) {
+    db.collection(collectionName).ensureIndex({createdAt: 1}, {expireAfterSeconds: 1200}, function(err) {
         if(err) throw err;
     });
 
