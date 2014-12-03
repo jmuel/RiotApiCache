@@ -26,6 +26,7 @@
     "assert": "^1.1.2",
     "express": "^4.10.1",
     "mongodb": "^1.4.19",
+    "nconf": "^0.7.1",
     "request": "^2.47.0",
     "underscore": "^1.7.0"
   }

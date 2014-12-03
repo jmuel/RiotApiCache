@@ -1,13 +1,17 @@
-var app = require('express')();
-var request = require('request');
-var _ = require('underscore');
-var MongoClient = require('mongodb').MongoClient;
-var uriUtil = require('./uri-query-utils.js');
-var collectionName = 'lol_data';
+var app = require('express')(),
+    request = require('request'),
+    MongoClient = require('mongodb').MongoClient,
+    uriUtil = require('./uri-query-utils.js'),
+    collectionName = 'lol_data',
+    nconf = require('nconf');
 
-var key = '44b37d42-2e7e-4006-8f65-34b8ef8ca591';
-var mongoUrl = 'mongodb://riotapi:riotapitest@dogen.mongohq.com:10085/app31717137';
+nconf.env().argv();
+nconf.file('env.json');
 
+var key = nconf.get('RIOT_KEY');
+var mongoUrl = nconf.get('MONGOHQ_URL');
+
+console.log(key, mongoUrl)
 
 var db;
 
